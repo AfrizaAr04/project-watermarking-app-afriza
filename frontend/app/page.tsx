@@ -38,7 +38,6 @@ import {
   SettingsIcon,
 } from "@chakra-ui/icons";
 import { motion } from "framer-motion";
-import axios from "axios";
 
 // --- SETUP COMPONENT ---
 const MotionCard = motion(Card);
@@ -137,27 +136,41 @@ export default function Home() {
         if (logoFile) formData.append("logo_file", logoFile);
       }
 
-      const response = await axios.post(
-        "http://127.0.0.1:5000/process-image",
-        formData,
-        {
-          headers: { "Content-Type": "multipart/form-data" },
-        }
-      );
+      // --- BAGIAN INI YANG DIPERBARUI (MENGGUNAKAN FETCH & ENV VAR) ---
+      
+      // 1. Tentukan URL Backend (Otomatis pilih Localhost atau Railway)
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:5000';
 
-      setProcessedImage(response.data.image);
+      // 2. Kirim Request
+      const response = await fetch(`${apiUrl}/process-image`, {
+        method: 'POST',
+        body: formData,
+      });
+
+      // 3. Cek Error dari Backend
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      // 4. Ambil Data JSON
+      const data = await response.json();
+      
+      // 5. Update State Gambar
+      setProcessedImage(data.image);
+
       toast({
         title: "Sukses!",
         description: "Watermark berhasil diterapkan.",
         status: "success",
         duration: 2000,
       });
+      
     } catch (error) {
       console.error(error);
       toast({
         title: "Gagal",
         description:
-          "Tidak dapat terhubung ke backend. Pastikan server.py jalan.",
+          "Tidak dapat terhubung ke backend. Pastikan server jalan atau URL benar.",
         status: "error",
       });
     } finally {
@@ -497,7 +510,7 @@ export default function Home() {
                           size="sm"
                           fontSize="xs"
                           aria-label="Select Position"
-                          title="Select Position" // PERBAIKAN FINAL: Menambahkan Title
+                          title="Select Position"
                         >
                           <option value="center">Center</option>
                           <option value="top-left">Top Left</option>
