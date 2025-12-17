@@ -3,4 +3,3 @@ flask-cors
 gunicorn
 numpy
 opencv-python-headless
-# ... library lain yang Anda pakai
