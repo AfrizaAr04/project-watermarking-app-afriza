@@ -1,11 +1,9 @@
-from flask import Flask, request, jsonify
 from flask_cors import CORS
 
-app = Flask(__name__)
-CORS(app)
+# ... setelah app = Flask(__name__) ...
 
-@app.route('/')
-def home():
-    return jsonify({"message": "Backend di Vercel Aktif!"})
-
-# Tambahkan route lainnya di sini...
+CORS(app, resources={r"/*": {
+    "origins": ["https://project-watermarking-app-afriza.vercel.app"],
+    "methods": ["GET", "POST", "OPTIONS"],
+    "allow_headers": ["Content-Type"]
+}})
