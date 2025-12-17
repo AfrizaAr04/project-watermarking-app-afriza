@@ -2,6 +2,9 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 from PIL import Image, ImageDraw, ImageFont, ImageColor
 import io
+import numpy as np
+import cv2
+import os
 import base64
 import math
 
@@ -207,5 +210,11 @@ def process_image():
         print(f"Error: {e}")
         return jsonify({'error': str(e)}), 500
 
+# ... semua fungsi def upload/process/dll di atas sini ...
+
 if __name__ == '__main__':
-    app.run(debug=True, port=5000)
+    # Ambil port dari Railway (Environment Variable)
+    port = int(os.environ.get("PORT", 5000))
+    
+    # Jalankan aplikasi dengan host 0.0.0.0
+    app.run(host='0.0.0.0', port=port)
