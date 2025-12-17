@@ -12,7 +12,6 @@ def create_app():
     @app.route('/', methods=['GET'])
     def home():
         return jsonify({"message": "Backend Ultimate Watermark Ready!", "status": 200})
-
     @app.route('/process-image', methods=['POST'])
     def process_image():
         try:
