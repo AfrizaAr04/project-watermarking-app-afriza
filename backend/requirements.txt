@@ -1,6 +1,6 @@
 flask
-flask-cors
-gunicorn
-numpy
-opencv-python-headless
+
+flask_cors
+
 Pillow
+gunicorn
