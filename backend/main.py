@@ -7,7 +7,17 @@ import base64
 
 app = Flask(__name__)
 
-CORS(app, resources={r"/*": {"origins": "*"}})
+# Hapus baris CORS yang lama, ganti dengan ini:
+from flask_cors import CORS
+
+CORS(app, resources={
+    r"/*": {
+        "origins": "*",
+        "methods": ["GET", "POST", "OPTIONS"],
+        "allow_headers": ["Content-Type", "Authorization"],
+        "expose_headers": ["Content-Type", "Authorization"]
+    }
+})
 
 @app.route('/')
 def home():
