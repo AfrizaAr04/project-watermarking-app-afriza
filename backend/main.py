@@ -7,17 +7,15 @@ import base64
 
 app = Flask(__name__)
 
-# Hapus baris CORS yang lama, ganti dengan ini:
-from flask_cors import CORS
+# ... setelah app = Flask(__name__) ...
 
-CORS(app, resources={
-    r"/*": {
-        "origins": "*",
-        "methods": ["GET", "POST", "OPTIONS"],
-        "allow_headers": ["Content-Type", "Authorization"],
-        "expose_headers": ["Content-Type", "Authorization"]
-    }
-})
+CORS(app, resources={r"/*": {
+    "origins": "*",
+    "methods": ["GET", "POST", "OPTIONS"],
+    "allow_headers": ["Content-Type", "Authorization"]
+}})
+
+
 @app.route('/process-image', methods=['POST', 'OPTIONS'])
 def process():
     if request.method == 'OPTIONS':
