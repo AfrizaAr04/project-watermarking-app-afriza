@@ -18,10 +18,13 @@ CORS(app, resources={
         "expose_headers": ["Content-Type", "Authorization"]
     }
 })
-@app.route('/process-image', methods=['POST'])
+@app.route('/process-image', methods=['POST', 'OPTIONS'])
 def process():
-    return jsonify({"message": "Koneksi Berhasil!"}), 200
-
+    if request.method == 'OPTIONS':
+        return '', 204
+    # Jangan proses gambar dulu, tes koneksi saja
+    return jsonify({"message": "Koneksi Tembus!"}), 200
+    
 @app.route('/')
 def home():
     return jsonify({"status": "ready", "message": "Backend Fix!"})
