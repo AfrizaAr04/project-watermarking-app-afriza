@@ -18,6 +18,9 @@ CORS(app, resources={
         "expose_headers": ["Content-Type", "Authorization"]
     }
 })
+@app.route('/process-image', methods=['POST'])
+def process():
+    return jsonify({"message": "Koneksi Berhasil!"}), 200
 
 @app.route('/')
 def home():
